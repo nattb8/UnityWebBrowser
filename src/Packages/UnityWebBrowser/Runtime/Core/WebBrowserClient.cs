@@ -568,6 +568,16 @@ namespace VoltstroStudios.UnityWebBrowser.Core
         }
 
         /// <summary>
+        ///     Invoked when JS calls back to the engine
+        /// </summary>
+        public event OnUnityPostMessageDelegate OnUnityPostMessage;
+
+        internal void InvokeOnUnityPostMessage(string message)
+        {
+            OnUnityPostMessage?.Invoke(message);
+        }
+
+        /// <summary>
         ///     Invoked when the page starts to load
         /// </summary>
         public event OnLoadStartDelegate OnLoadStart;

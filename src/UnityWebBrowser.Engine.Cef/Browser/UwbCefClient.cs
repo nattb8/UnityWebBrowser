@@ -11,6 +11,8 @@ using VoltstroStudios.UnityWebBrowser.Shared;
 using VoltstroStudios.UnityWebBrowser.Shared.Events;
 using VoltstroStudios.UnityWebBrowser.Shared.Popups;
 using Xilium.CefGlue;
+using UnityWebBrowser.Engine.Cef.Core;
+using System.Text.RegularExpressions;
 
 namespace UnityWebBrowser.Engine.Cef.Browser;
 
@@ -248,4 +250,17 @@ public class UwbCefClient : CefClient, IDisposable
     }
 
     #endregion
+
+    protected override bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess,
+        CefProcessMessage message)
+    {
+        if (message.Name.StartsWith(UwbCefRenderProcessHandler.UNITY_POST_MESSAGE_FUNC)) {
+            var regex = new Regex(Regex.Escape($"{UwbCefRenderProcessHandler.UNITY_POST_MESSAGE_FUNC}:"));
+            var postMessage = regex.Replace(message.Name, "", 1);
+            ClientControls.UnityPostMessage(postMessage);
+        } else {
+            CefLoggerWrapper.Debug($"[UwbCefClient] {message.Name}");
+        }
+        return false;
+    }
 }

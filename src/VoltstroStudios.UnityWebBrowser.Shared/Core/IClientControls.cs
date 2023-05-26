@@ -20,6 +20,12 @@ internal interface IClientControls
     public void UrlChange(string url);
 
     /// <summary>
+    ///     Tell the client when there's a message from the web
+    /// </summary>
+    /// <param name="message"></param>
+    public void UnityPostMessage(string message);
+
+    /// <summary>
     ///     Tell the client that a URL started to load
     /// </summary>
     /// <param name="url"></param>

@@ -25,6 +25,12 @@ public class ClientControlsActions : IClientControls, IDisposable
             clientActions?.UrlChange(url);
     }
 
+    public void UnityPostMessage(string message)
+    {
+        if (client is {IsConnected: true})
+            clientActions?.UnityPostMessage(message);
+    }
+
     public void LoadStart(string url)
     {
         if (client is {IsConnected: true})

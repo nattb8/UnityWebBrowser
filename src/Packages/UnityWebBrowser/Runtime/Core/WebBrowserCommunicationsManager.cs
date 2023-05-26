@@ -229,6 +229,11 @@ namespace VoltstroStudios.UnityWebBrowser.Core
             ExecuteOnUnity(() => client.InvokeUrlChanged(url));
         }
 
+         public void UnityPostMessage(string message)
+        {
+            ExecuteOnUnity(() => client.InvokeOnUnityPostMessage(message));
+        }
+
         public void LoadStart(string url)
         {
             ExecuteOnUnity(() => client.InvokeLoadStart(url));

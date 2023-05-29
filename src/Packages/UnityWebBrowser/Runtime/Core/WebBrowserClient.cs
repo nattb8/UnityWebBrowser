@@ -910,5 +910,11 @@ namespace VoltstroStudios.UnityWebBrowser.Core
         }
 
         #endregion
+
+        public void CallJsFunction(string jsonData)
+        {
+            CheckIfIsReadyAndConnected();
+            communicationsManager.CallJsFunction(jsonData);
+        }
     }
 }

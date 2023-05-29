@@ -321,4 +321,6 @@ public abstract class EngineEntryPoint : IDisposable
     }
 
     #endregion
+
+    protected abstract void CallJsFunction(string jsonData);
 }

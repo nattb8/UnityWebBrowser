@@ -265,5 +265,10 @@ namespace VoltstroStudios.UnityWebBrowser.Core
         }
 
         #endregion
+
+        public void CallJsFunction(string jsonData)
+        {
+            ExecuteTask(() => engineProxy.CallJsFunction(jsonData));
+        }
     }
 }

@@ -97,4 +97,10 @@ internal interface IEngineControls
     /// </summary>
     /// <param name="resolution"></param>
     public void Resize(Resolution resolution);
+
+    /// <summary>
+    ///     Tells the UWB engine to call the JS function
+    /// </summary>
+    /// <param name="jsonData"></param>
+    public void CallJsFunction(string jsonData);
 }

@@ -274,4 +274,10 @@ internal class CefEngineControlsManager : IEngineControls, IDisposable
     }
 
     #endregion
+
+    public void CallJsFunction(string jsonData)
+    {
+        Logger.Debug($"CallJsFunction from CefEngineControlsManager");
+        cefClient?.CallJsFunction(jsonData);
+    }
 }

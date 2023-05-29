@@ -251,6 +251,11 @@ public class UwbCefClient : CefClient, IDisposable
 
     #endregion
 
+    public void CallJsFunction(string jsonData)
+    {
+        browser.GetMainFrame().SendProcessMessage(CefProcessId.Renderer, CefProcessMessage.Create(jsonData));
+    }
+
     protected override bool OnProcessMessageReceived(CefBrowser browser, CefFrame frame, CefProcessId sourceProcess,
         CefProcessMessage message)
     {

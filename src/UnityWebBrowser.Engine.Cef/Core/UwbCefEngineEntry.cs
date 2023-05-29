@@ -54,4 +54,10 @@ public class UwbCefEngineEntry : EngineEntryPoint
     }
 
     #endregion
+
+    protected override void CallJsFunction(string jsonData)
+    {
+        Logger.Debug($"CallJsFunction from UwbCefEngineEntry");
+        cefEngineControlsManager.CallJsFunction(jsonData);
+    }
 }

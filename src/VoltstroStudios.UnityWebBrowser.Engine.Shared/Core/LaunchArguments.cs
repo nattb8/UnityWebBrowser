@@ -5,7 +5,6 @@
 
 using System.IO;
 using VoltstroStudios.UnityWebBrowser.Shared;
-using VoltstroStudios.UnityWebBrowser.Shared.Popups;
 
 namespace VoltstroStudios.UnityWebBrowser.Engine.Shared.Core;
 
@@ -43,11 +42,6 @@ public class LaunchArguments
     ///     Control local storage
     /// </summary>
     public bool LocalStorage { get; init; }
-    
-    /// <summary>
-    ///     How to handle popups
-    /// </summary>
-    public PopupAction PopupAction { get; init; }
 
     /// <summary>
     ///     The port to use for remote debugging

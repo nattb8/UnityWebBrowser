@@ -11,7 +11,6 @@ using UnityWebBrowser.Engine.Cef.Browser;
 using VoltstroStudios.UnityWebBrowser.Engine.Shared;
 using VoltstroStudios.UnityWebBrowser.Engine.Shared.Core;
 using VoltstroStudios.UnityWebBrowser.Engine.Shared.Core.Logging;
-using VoltstroStudios.UnityWebBrowser.Engine.Shared.Popups;
 using VoltstroStudios.UnityWebBrowser.Shared;
 using VoltstroStudios.UnityWebBrowser.Shared.Core;
 using VoltstroStudios.UnityWebBrowser.Shared.Events;
@@ -88,7 +87,7 @@ internal class CefEngineControlsManager : IEngineControls, IDisposable
     ///     Starts CEF
     /// </summary>
     /// <exception cref="Exception"></exception>
-    public void Init(ClientControlsActions clientControlsActions, EnginePopupManager popupManager)
+    public void Init(ClientControlsActions clientControlsActions)
     {
         //Do we have a cache or not, if not CEF will run in "incognito" mode.
         string cachePathArgument = null;
@@ -151,14 +150,12 @@ internal class CefEngineControlsManager : IEngineControls, IDisposable
                      $"\nLocal Storage: {launchArguments.LocalStorage}" +
                      $"\nBackgroundColor: {suppliedColor}" +
                      $"\nCache Path: {cachePathArgument}" +
-                     $"\nPopup Action: {launchArguments.PopupAction}" +
                      $"\nLog Path: {launchArguments.LogPath.FullName}" +
                      $"\nLog Severity: {launchArguments.LogSeverity}");
         Logger.Info($"{CefLoggerWrapper.FullCefMessageTag} Starting CEF client...");
 
         //Create cef browser
         cefClient = new UwbCefClient(new CefSize(launchArguments.Width, launchArguments.Height),
-            launchArguments.PopupAction, popupManager,
             new ProxySettings(launchArguments.ProxyUsername, launchArguments.ProxyPassword,
                 launchArguments.ProxyEnabled), clientControlsActions);
         CefBrowserHost.CreateBrowser(cefWindowInfo, cefClient, cefBrowserSettings, launchArguments.InitialUrl);

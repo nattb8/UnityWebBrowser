@@ -20,16 +20,11 @@ public class UwbCefLifespanHandler : CefLifeSpanHandler
 {
     public event Action<CefBrowser> AfterCreated;
 
-    private readonly EnginePopupManager popupManager;
     private readonly ProxySettings proxySettings;
-    
-    private readonly PopupAction popupAction;
 
-    public UwbCefLifespanHandler(PopupAction popupAction, EnginePopupManager enginePopupManager, ProxySettings proxySettings)
+    public UwbCefLifespanHandler(ProxySettings proxySettings)
     {
         this.proxySettings = proxySettings;
-        this.popupAction = popupAction;
-        popupManager = enginePopupManager;
     }
 
     protected override void OnAfterCreated(CefBrowser browser)
@@ -45,20 +40,6 @@ public class UwbCefLifespanHandler : CefLifeSpanHandler
         ref bool noJavascriptAccess)
     {
         CefLoggerWrapper.Debug($"Popup: {targetFrameName}({targetUrl})");
-
-        switch (popupAction)
-        {
-            case PopupAction.Ignore:
-                break;
-            case PopupAction.OpenExternalWindow:
-                popupManager.OnPopup(new UwbCefEnginePopupInfo(popupManager, proxySettings, ref client));
-                return false;
-            case PopupAction.Redirect:
-                frame.LoadUrl(targetUrl);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
         
         return true;
     }

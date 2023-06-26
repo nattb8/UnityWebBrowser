@@ -7,7 +7,6 @@ using System.CommandLine;
 using System.CommandLine.Binding;
 using System.IO;
 using VoltstroStudios.UnityWebBrowser.Shared;
-using VoltstroStudios.UnityWebBrowser.Shared.Popups;
 
 namespace VoltstroStudios.UnityWebBrowser.Engine.Shared.Core;
 
@@ -29,7 +28,6 @@ internal class LaunchArgumentsBinder : BinderBase<LaunchArguments>
     private readonly Option<bool> localStorage;
     private readonly Option<int> remoteDebugging;
     private readonly Option<FileInfo> cachePath;
-    private readonly Option<PopupAction> popupAction;
     
     //Background color
     private readonly Option<string> backgroundColor;
@@ -54,7 +52,7 @@ internal class LaunchArgumentsBinder : BinderBase<LaunchArguments>
     public LaunchArgumentsBinder(
         Option<string> initialUrl,
         Option<int> width, Option<int> height,
-        Option<bool> javaScript, Option<bool> webRtc, Option<bool> localStorage, Option<int> remoteDebugging, Option<FileInfo> cachePath, Option<PopupAction> popupAction,
+        Option<bool> javaScript, Option<bool> webRtc, Option<bool> localStorage, Option<int> remoteDebugging, Option<FileInfo> cachePath,
         Option<string> backgroundColor,
         Option<bool> proxyServer, Option<string> proxyUsername, Option<string> proxyPassword,
         Option<FileInfo> logPath, Option<LogSeverity> logSeverity,
@@ -70,7 +68,6 @@ internal class LaunchArgumentsBinder : BinderBase<LaunchArguments>
         this.localStorage = localStorage;
         this.remoteDebugging = remoteDebugging;
         this.cachePath = cachePath;
-        this.popupAction = popupAction;
         
         this.backgroundColor = backgroundColor;
         
@@ -102,7 +99,6 @@ internal class LaunchArgumentsBinder : BinderBase<LaunchArguments>
             LocalStorage = bindingContext.ParseResult.GetValueForOption(localStorage),
             RemoteDebugging = bindingContext.ParseResult.GetValueForOption(remoteDebugging),
             CachePath = bindingContext.ParseResult.GetValueForOption(cachePath),
-            PopupAction = bindingContext.ParseResult.GetValueForOption(popupAction),
 
             BackgroundColor = new Color(bindingContext.ParseResult.GetValueForOption(backgroundColor)),
 

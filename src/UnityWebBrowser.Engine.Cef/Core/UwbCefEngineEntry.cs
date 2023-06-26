@@ -31,7 +31,7 @@ public class UwbCefEngineEntry : EngineEntryPoint
 
     protected override void EntryPoint(LaunchArguments launchArguments, string[] args)
     {
-        cefEngineControlsManager.Init(ClientControlsActions, PopupManager);
+        cefEngineControlsManager.Init(ClientControlsActions);
 
         SetupIpc(cefEngineControlsManager, launchArguments);
         Ready();

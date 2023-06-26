@@ -37,14 +37,14 @@ public class UwbCefClient : CefClient, IDisposable
     /// <summary>
     ///     Creates a new <see cref="UwbCefClient" /> instance
     /// </summary>
-    public UwbCefClient(CefSize size, PopupAction popupAction, EnginePopupManager popupManager, ProxySettings proxySettings, ClientControlsActions clientControlsActions)
+    public UwbCefClient(CefSize size, ProxySettings proxySettings, ClientControlsActions clientControlsActions)
     {
         ClientControls = clientControlsActions;
 
         //Setup our handlers
         loadHandler = new UwbCefLoadHandler(this);
         renderHandler = new UwbCefRenderHandler(size);
-        lifespanHandler = new UwbCefLifespanHandler(popupAction, popupManager, proxySettings);
+        lifespanHandler = new UwbCefLifespanHandler(proxySettings);
         lifespanHandler.AfterCreated += cefBrowser =>
         {
             browser = cefBrowser;

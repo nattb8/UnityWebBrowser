@@ -10,11 +10,9 @@ using System.Threading;
 using VoltstroStudios.UnityWebBrowser.Shared;
 using VoltstroStudios.UnityWebBrowser.Shared.Communications;
 using VoltstroStudios.UnityWebBrowser.Shared.Core;
-using VoltstroStudios.UnityWebBrowser.Shared.Popups;
 using VoltRpc.Communication;
 using VoltstroStudios.UnityWebBrowser.Engine.Shared.Communications;
 using VoltstroStudios.UnityWebBrowser.Engine.Shared.Core.Logging;
-using VoltstroStudios.UnityWebBrowser.Engine.Shared.Popups;
 using VoltstroStudios.UnityWebBrowser.Engine.Shared.ReadWriters;
 
 namespace VoltstroStudios.UnityWebBrowser.Engine.Shared.Core;
@@ -31,11 +29,6 @@ public abstract class EngineEntryPoint : IDisposable
     ///     Allows the engine to fire events on the Unity client side
     /// </summary>
     protected ClientControlsActions ClientControlsActions { get; private set; }
-    
-    /// <summary>
-    ///     Call to invoke new popups
-    /// </summary>
-    protected EnginePopupManager PopupManager { get; private set; }
 
     /// <summary>
     ///     Is the <see cref="Client" /> side of the connection connected
@@ -100,9 +93,6 @@ public abstract class EngineEntryPoint : IDisposable
         Option<FileInfo> cachePath = new("-cache-path",
             () => null,
             "The path to the cache (null for no cache)");
-        Option<PopupAction> popupAction = new("-popup-action", 
-            () => PopupAction.Ignore,
-            "What action to take when dealing with a popup");
 
         //Background color
         Option<string> backgroundColor = new("-background-color",
@@ -148,7 +138,7 @@ public abstract class EngineEntryPoint : IDisposable
         {
             initialUrl,
             width, height,
-            javaScript, webRtc, localStorage, remoteDebugging, cachePath, popupAction,
+            javaScript, webRtc, localStorage, remoteDebugging, cachePath,
             backgroundColor,
             proxyServer, proxyUsername, proxyPassword,
             logPath, logSeverity,
@@ -164,7 +154,7 @@ public abstract class EngineEntryPoint : IDisposable
         LaunchArgumentsBinder launchArgumentBinder = new(
             initialUrl,
             width, height,
-            javaScript, webRtc, localStorage, remoteDebugging, cachePath, popupAction,
+            javaScript, webRtc, localStorage, remoteDebugging, cachePath,
             backgroundColor,
             proxyServer, proxyUsername, proxyPassword,
             logPath, logSeverity,
@@ -179,7 +169,6 @@ public abstract class EngineEntryPoint : IDisposable
                 Logger.Init(parsedArgs.LogSeverity);
             
             ClientControlsActions = new ClientControlsActions();
-            PopupManager = new EnginePopupManager();
 
             //Run early init
             try
@@ -249,12 +238,10 @@ public abstract class EngineEntryPoint : IDisposable
             //Add type readers
             EngineReadWritersManager.AddTypeReadWriters(ipcHost.TypeReaderWriterManager);
             ipcHost.AddService(typeof(IEngineControls), engineControls);
-            ipcHost.AddService(typeof(IPopupClientControls), PopupManager);
             ipcHost.StartListeningAsync().ConfigureAwait(false);
 
             EngineReadWritersManager.AddTypeReadWriters(ipcClient.TypeReaderWriterManager);
             ipcClient.AddService(typeof(IClientControls));
-            ipcClient.AddService(typeof(IPopupEngineControls));
 
             //Connect the engine (us) back to Unity
             try
@@ -262,7 +249,6 @@ public abstract class EngineEntryPoint : IDisposable
                 ipcClient.Connect();
                 
                 ClientControlsActions.SetIpcClient(ipcClient);
-                PopupManager.SetIpcClient(ipcClient);
             }
             catch (ConnectionFailedException)
             {

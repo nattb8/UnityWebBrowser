@@ -18,11 +18,6 @@ namespace VoltstroStudios.UnityWebBrowser.Shared.Core;
 [GenerateProxy(GeneratedName = "EngineControls", GeneratedNamespace = "VoltstroStudios.UnityWebBrowser.Shared.Core")]
 internal interface IEngineControls
 {
-    /// <summary>
-    ///     Gets the pixels that will be displayed in a texture
-    /// </summary>
-    /// <returns></returns>
-    public PixelsEvent GetPixels();
 
     /// <summary>
     ///     Shutdown the UWB engine
@@ -52,12 +47,6 @@ internal interface IEngineControls
     /// </summary>
     /// <param name="mouseScrollEvent"></param>
     public void SendMouseScrollEvent(MouseScrollEvent mouseScrollEvent);
-
-    /// <summary>
-    ///     Gets scroll position
-    /// </summary>
-    /// <returns></returns>
-    public Vector2 GetScrollPosition();
 
     /// <summary>
     ///     Tells the UWB engine to go forward (if it can)
@@ -91,10 +80,4 @@ internal interface IEngineControls
     /// </summary>
     /// <param name="js"></param>
     public void ExecuteJs(string js);
-
-    /// <summary>
-    ///     Tells the UWB engine to resize
-    /// </summary>
-    /// <param name="resolution"></param>
-    public void Resize(Resolution resolution);
 }

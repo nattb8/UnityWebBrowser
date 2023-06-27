@@ -168,14 +168,6 @@ internal class CefEngineControlsManager : IEngineControls, IDisposable
 
     #region Engine Actions
 
-    public PixelsEvent GetPixels()
-    {
-        return new PixelsEvent
-        {
-            PixelData = cefClient.GetPixels()
-        };
-    }
-
     public void Shutdown()
     {
         //We can only quit the message loop on the UI (main) thread
@@ -209,11 +201,6 @@ internal class CefEngineControlsManager : IEngineControls, IDisposable
         cefClient.ProcessMouseScrollEvent(mouseScrollEvent);
     }
 
-    public Vector2 GetScrollPosition()
-    {
-        return cefClient.GetMouseScrollPosition();
-    }
-
     public void GoForward()
     {
         cefClient.GoForward();
@@ -242,11 +229,6 @@ internal class CefEngineControlsManager : IEngineControls, IDisposable
     public void ExecuteJs(string js)
     {
         cefClient.ExecuteJs(js);
-    }
-
-    public void Resize(Resolution resolution)
-    {
-        cefClient.Resize(resolution);
     }
 
     #endregion

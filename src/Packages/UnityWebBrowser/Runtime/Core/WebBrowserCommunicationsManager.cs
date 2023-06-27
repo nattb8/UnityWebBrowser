@@ -87,17 +87,6 @@ namespace VoltstroStudios.UnityWebBrowser.Core
             }
         }
 
-        public PixelsEvent GetPixels()
-        {
-            using (sendEventMarker.Auto())
-            {
-                lock (threadLock)
-                {
-                    return engineProxy.GetPixels();
-                }
-            }
-        }
-
         public void Shutdown()
         {
             lock (threadLock)
@@ -124,17 +113,6 @@ namespace VoltstroStudios.UnityWebBrowser.Core
         public void SendMouseScrollEvent(MouseScrollEvent mouseScrollEvent)
         {
             ExecuteTask(() => engineProxy.SendMouseScrollEvent(mouseScrollEvent));
-        }
-
-        public Vector2 GetScrollPosition()
-        {
-            using (sendEventMarker.Auto())
-            {
-                lock (threadLock)
-                {
-                    return engineProxy.GetScrollPosition();
-                }
-            }
         }
 
         public void GoForward()
@@ -165,11 +143,6 @@ namespace VoltstroStudios.UnityWebBrowser.Core
         public void ExecuteJs(string js)
         {
             ExecuteTask(() => engineProxy.ExecuteJs(js));
-        }
-
-        public void Resize(Resolution resolution)
-        {
-            ExecuteTask(() => engineProxy.Resize(resolution));
         }
 
         public void Connect()
